@@ -1,0 +1,3 @@
+= Karousel example
+
+An example how to use karousel gem
