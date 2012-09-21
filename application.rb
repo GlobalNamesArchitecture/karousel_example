@@ -9,17 +9,17 @@ class Page < Karousel::ClientJob
   NAME_FINDER_URL = 'http://gnrd.globalnames.org/name_finder.json'
   attr_accessor :status
 
-  @@instances = []
+  @@instances = nil
 
   def self.populate(karousel_size)
-    get_all_instances
+    get_all_instances unless @@instances
     res = []
     karousel_size.times { res << @@instances.shift }
-    res
+    res.compact
   end
 
   def self.get_all_instances
-    return unless @@instances.empty?
+    @@instances = []
     files = Find.find('./bhl_sample').select {|i| i.match /\.txt$/}
     files.each do |f|
       @@instances << Page.new(f)
@@ -51,6 +51,7 @@ class Page < Karousel::ClientJob
   def process
     puts @file
     puts @names
+    puts "Items left: %s" % @@instances.size
   end
 end
 
