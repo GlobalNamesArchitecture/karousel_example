@@ -5,7 +5,7 @@ require 'rest_client'
 require 'find'
 require 'json'
 
-class Page
+class Page < Karousel::ClientJob
   NAME_FINDER_URL = 'http://gnrd.globalnames.org/name_finder.json'
   attr_accessor :status
 
