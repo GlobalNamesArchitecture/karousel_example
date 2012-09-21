@@ -6,6 +6,7 @@ require 'find'
 require 'json'
 
 class Page
+  NAME_FINDER_URL = 'http://gnrd.globalnames.org/name_finder.json'
   attr_accessor :status
 
   @@instances = []
@@ -32,7 +33,7 @@ class Page
 
   def send
     params = {:file => File.new(@file, 'r'), :unique => "true", :verbatim => "false", :detect_language => "false"}
-    RestClient.post('http://128.128.175.111/name_finder.json', params) do |response, request, result, &block|
+    RestClient.post(NAME_FINDER_URL, params) do |response, request, result, &block|
       if [302, 303].include? response.code
         @url = response.headers[:location]
         true
